@@ -78,7 +78,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float) -> tuple[fl
                           "lmbd(k)", "mu(k)",
                           "F(lmbd(k))", "F(mu(k))"
                           ]
-
+        
     fibs = [1, 1]
     n = 2
     while True:
