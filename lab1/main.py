@@ -16,9 +16,9 @@ l = float(input('Введите l: '))
 
 
 # функция 1
-x_dich, res_dich = Dichotomic_search(func1, a, b, eps, l)
-x_gold, res_gold = Golden_search(func1, a, b, l)
-x_fib, res_fib = Fibonacci_search(func1, a, b, eps, l)
+x_dich, res_dich = Dichotomic_search(func1, a, b, eps, l, 'max')
+x_gold, res_gold = Golden_search(func1, a, b, l, 'max')
+x_fib, res_fib = Fibonacci_search(func1, a, b, eps, l, 'max')
 with open('dich_min_1.txt', 'w') as f_d,\
      open('gold_min_1.txt', 'w') as f_g,\
      open('fib_min_1.txt', 'w')  as f_b:
@@ -28,9 +28,9 @@ with open('dich_min_1.txt', 'w') as f_d,\
     f_b.write(f'x* = {x_fib}\n'+res_fib)
 
 # функция 2
-x_dich, res_dich = Dichotomic_search(func2, a, b, eps, l)
-x_gold, res_gold = Golden_search(func2, a, b, l)
-x_fib, res_fib = Fibonacci_search(func2, a, b, eps, l)
+x_dich, res_dich = Dichotomic_search(func2, a, b, eps, l, 'max')
+x_gold, res_gold = Golden_search(func2, a, b, l, 'max')
+x_fib, res_fib = Fibonacci_search(func2, a, b, eps, l, 'max')
 with open('dich_min_2.txt', 'w') as f_d,\
      open('gold_min_2.txt', 'w') as f_g,\
      open('fib_min_2.txt', 'w')  as f_b:
