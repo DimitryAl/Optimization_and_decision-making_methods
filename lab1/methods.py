@@ -1,13 +1,16 @@
 from prettytable import PrettyTable
 
 
-def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str) -> tuple[float, str]:
+def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str) -> tuple[float, str, int]:
     """Dichotomic search method"""
 
+    if l < 2 * eps: 
+        return 0, 'None', 'None'
+    
     result = PrettyTable()
-    result.field_names = ["k", "a(k)", "b(k)",
-                          "lmbd(k)", "mu(k)",
-                          "F(lmbd(k))", "F(mu(k))"
+    result.field_names = ["k", "a", "b",
+                          "lmbd", "mu",
+                          "F(lmbd)", "F(mu)"
                           ]
     cnt = 0  # Счетчик вызовов функций
     if extr == 'max':
@@ -17,7 +20,6 @@ def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str)
 
     k = 1
     while b - a > l:
-
         lmbd = ((a + b) / 2) - eps
         mu = ((a + b) / 2) + eps
 
@@ -26,8 +28,6 @@ def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str)
         if extr == 'max':
             func_lmbd = -func_lmbd
             func_mu = -func_mu
-
-
         cnt += 2
 
         result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
@@ -41,16 +41,16 @@ def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str)
 
     result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
-    return (a + b)/2, result.get_string()
+    return (a + b)/2, result.get_string(), cnt
 
 
 def Golden_search(func, a: float, b: float, l: float, extr: str) -> tuple[float, str]:
     """Golden-section search method"""
 
     result = PrettyTable()
-    result.field_names = ["k", "a(k)", "b(k)",
-                          "lmbd(k)", "mu(k)",
-                          "F(lmbd(k))", "F(mu(k))"
+    result.field_names = ["k", "a", "b",
+                          "lmbd", "mu",
+                          "F(lmbd)", "F(mu)"
                           ]
     cnt = 0  # Счетчик вызовов функций
     if extr == 'max':
@@ -98,16 +98,16 @@ def Golden_search(func, a: float, b: float, l: float, extr: str) -> tuple[float,
         k += 1
         result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
-    return (a + b)/2, result.get_string()
+    return (a + b)/2, result.get_string(), cnt
 
 
 def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) -> tuple[float, str]:
     """Fibonacci search method"""
 
     result = PrettyTable()
-    result.field_names = ["k", "a(k)", "b(k)",
-                          "lmbd(k)", "mu(k)",
-                          "F(lmbd(k))", "F(mu(k))"
+    result.field_names = ["k", "a", "b",
+                          "lmbd", "mu",
+                          "F(lmbd)", "F(mu)"
                           ]
     cnt = 0 # Счетчик вызовов функций
     if extr == 'max':
@@ -198,4 +198,4 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
         k += 1
         result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
-    return (a + b)/2, result.get_string()
+    return (a + b)/2, result.get_string(), cnt
