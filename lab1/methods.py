@@ -1,9 +1,10 @@
 from prettytable import PrettyTable
 
+dich_cnt = 0
 
 def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str) -> tuple[float, str, int]:
     """Dichotomic search method"""
-
+    
     if l < 2 * eps: 
         return 0, 'None', 'None'
     
@@ -30,16 +31,15 @@ def Dichotomic_search(func, a: float, b: float, eps: float, l: float, extr: str)
             func_mu = -func_mu
         cnt += 2
 
-        result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
-
         if func_lmbd > func_mu:
             a = lmbd
         else:
             b = mu
+        result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
         k += 1
 
-    result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
+    #result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
     return (a + b)/2, result.get_string(), cnt
 
@@ -133,7 +133,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
     if extr == 'max':
         func_lmbd *= -1
         func_mu *= -1
-    cnt += 2
+    cnt += 0
     result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
     while b - a > l:
@@ -165,7 +165,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                 if extr == 'max':
                     func_lmbd *= -1
                     func_mu *= -1
-                cnt += 2
+                cnt += 1
         else:
             # третий шаг
             b = mu
@@ -176,6 +176,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                 mu = lmbd + eps
                 func_lmbd = func(lmbd)
                 func_mu = func(mu)
+                cnt += 2
                 if extr == 'max':
                     func_lmbd *= -1
                     func_mu *= -1
@@ -184,7 +185,6 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                     a = lmbd
                 else:
                     b = mu
-                cnt += 2
                 result.add_row([k+1, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
                 break
             else:
@@ -193,7 +193,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                 if extr == 'max':
                     func_lmbd *= -1
                     func_mu *= -1
-                cnt += 2
+                cnt += 1
         # 4 шаг
         k += 1
         result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
