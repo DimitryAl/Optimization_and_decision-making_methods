@@ -1,8 +1,8 @@
 from prettytable import PrettyTable
 
-from functions import gradient, norm, function
-from functions import mint, derivatives
-
+#from functions import *
+#from func_test1 import *
+from func_2 import *
 
 
 table = PrettyTable()
@@ -12,11 +12,11 @@ def gauss_seidel():
     n = 2
     eps = 0.01
     e = [[1, 0], [0, 1]]
-    x = [0.5, 1]
+    x = [10, 10]
     j = 0
     table.add_row([j, x.copy(), function(x), norm(gradient(x))])
     while True:
-        k = 0
+        k = 0 # по какой производной шагаем
         print(x)
         while k <= n - 1:
             grad = gradient(x)
