@@ -17,8 +17,8 @@ def func2(x: float) -> float:
 # a, b = float(input('a: ')), float(input('b: '))
 # eps = float(input('Введите eps: '))
 # l = float(input('Введите l: '))
-a = -1
-b = 10
+a = 2
+b = 4
 eps = 0.01
 l = 0.1
 func1_cnt = 0

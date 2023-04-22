@@ -133,7 +133,7 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
     if extr == 'max':
         func_lmbd *= -1
         func_mu *= -1
-    cnt += 0
+    cnt += 2
     result.add_row([k, a, b, lmbd, mu, sign*func_lmbd, sign*func_mu])
 
     while b - a > l:
@@ -161,9 +161,9 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                 break
             else:
                 func_mu = func(mu)
-                func_lmbd = func(lmbd)
+                #func_lmbd = func(lmbd)
                 if extr == 'max':
-                    func_lmbd *= -1
+                    #func_lmbd *= -1
                     func_mu *= -1
                 cnt += 1
         else:
@@ -189,10 +189,10 @@ def Fibonacci_search(func, a: float, b: float, eps: float, l: float, extr: str) 
                 break
             else:
                 func_lmbd = func(lmbd)
-                func_mu = func(mu)
+                #func_mu = func(mu)
                 if extr == 'max':
                     func_lmbd *= -1
-                    func_mu *= -1
+                    #func_mu *= -1
                 cnt += 1
         # 4 шаг
         k += 1
