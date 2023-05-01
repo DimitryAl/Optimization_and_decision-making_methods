@@ -31,6 +31,13 @@ def g(x, alpha):
     return res
 
 
+def new_x(x, k, y):
+    new_x = [x[0], x[1]]
+    new_x[k] += y
+    return new_x
+
+
+
 def mint(a0, b0, eps, x):   # поиск минимального шага методом половинного деления
     # http://optimizaciya-sapr.narod.ru/bez_mnogomer/naiskpok2.html
     lk = 0
@@ -61,6 +68,49 @@ def mint(a0, b0, eps, x):   # поиск минимального шага ме�
             bk = mk
         else:
             ak = lk
+    x_ = (ak + bk) / 2
+    return x_
+
+
+def mint_new(a0, b0, eps, x, d):   # поиск минимального шага методом половинного деления
+    # http://optimizaciya-sapr.narod.ru/bez_mnogomer/naiskpok2.html
+    lk = 0
+    mk = 0
+    delta = 0.5*eps
+    x_ = 0
+    ak = a0
+    bk = b0
+    k = 1
+
+    lk = (ak + bk - delta) / 2
+    mk = (ak + bk + delta) / 2
+    # lk = (ak + bk) / 2 - delta
+    # mk = (ak + bk) / 2 + delta
+    k += 1
+    # if g(x, lk) <= g(x, mk):
+    #     bk = mk
+    # else:
+    #     ak = lk
+    
+    if function(new_x(x, d, lk)) <= function(new_x(x, d, mk)):
+        ak = lk
+    else:
+        bk = mk
+
+    while (bk - ak) >= eps:
+        lk = (ak + bk - delta) / 2
+        mk = (ak + bk + delta) / 2
+        # lk = (ak + bk) / 2 - delta
+        # mk = (ak + bk) / 2 + delta
+        k += 1
+        # if g(x, lk) <= g(x, mk):
+        #     bk = mk
+        # else:
+        #     ak = lk
+        if function(new_x(x, d, lk)) <= function(new_x(x, d, mk)):
+            ak = lk
+        else:
+            bk = mk
     x_ = (ak + bk) / 2
     return x_
 
