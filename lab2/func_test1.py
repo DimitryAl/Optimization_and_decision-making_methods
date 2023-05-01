@@ -1,6 +1,5 @@
 import math
 
-
 def function(x):    # возвращает значение функции в точке
     res = -x[0]**2 - x[1]**2 + x[0]*x[1] - x[0] + 2*x[1]
     return res
