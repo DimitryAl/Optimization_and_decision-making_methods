@@ -47,15 +47,20 @@ def gauss_seidel_opt(func, y:list[float], eps:float):
 
 def lmbd_check(lmbd, y, d, k, func):
     temp = y.copy()
+    cnt = 0
     while True:
         temp[k] = y[k] + lmbd * d[k][k]
-        if func(temp) > func(y):
+        if func(temp) < func(y):
             return lmbd
         temp[k] = y[k] - lmbd * d[k][k]
-        if func(temp) > func(y):
+        if func(temp) < func(y):
             return -lmbd
         lmbd /= 2
-
+        cnt += 1
+        if cnt > 20:
+            break
+    return 0.1
+    
 
 def gauss_seidel_disk(func, y:list[float], eps:float):
     ''' Метод Гаусса-Зейделя с дискретным шагом '''
@@ -70,17 +75,20 @@ def gauss_seidel_disk(func, y:list[float], eps:float):
     table.add_row([j, y.copy(), func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
     cnt = 0
     while True:
-        print(cnt)
         if cnt >= 50:
             print(table)
             break
         cnt+=1
         k = 0 # по какой координате шагаем
-        while k <= n - 1:
-            lmbd[k] = lmbd_check(lmbd[k], y, d, k, func)
-            for i in range(n):
-                y[i] = y[i] + lmbd[k] * d[k][i]
-            k = k + 1 
+        #while k <= n - 1:
+            #lmbd[k] = lmbd_check(lmbd[k], y, d, 1, func)
+            #for i in range(n):
+            #    y[i] = y[i] + lmbd[k] * d[k][i]
+            #k = k + 1 
+        lmbd[0] = lmbd_check(lmbd[0], y, d, 0, func)
+        lmbd[1] = lmbd_check(lmbd[1], y, d, 1, func)
+        for i in range(n):
+            y[i] = y[i] + lmbd[i] * d[i][i]
         if comp(y, y_old, eps):
             table.add_row([j+1, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
             print(table)
