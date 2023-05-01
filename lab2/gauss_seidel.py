@@ -45,14 +45,14 @@ def gauss_seidel_opt(func, y:list[float], eps:float):
 
 
 
-def lmbd_check(lmbd, y, d, k):
+def lmbd_check(lmbd, y, d, k, func):
     temp = y.copy()
     while True:
         temp[k] = y[k] + lmbd * d[k][k]
-        if function1(temp) > function1(y):
+        if func(temp) > func(y):
             return lmbd
         temp[k] = y[k] - lmbd * d[k][k]
-        if function1(temp) > function1(y):
+        if func(temp) > func(y):
             return -lmbd
         lmbd /= 2
 
@@ -77,7 +77,7 @@ def gauss_seidel_disk(func, y:list[float], eps:float):
         cnt+=1
         k = 0 # по какой координате шагаем
         while k <= n - 1:
-            lmbd[k] = lmbd_check(lmbd[k], y, d, k)
+            lmbd[k] = lmbd_check(lmbd[k], y, d, k, func)
             for i in range(n):
                 y[i] = y[i] + lmbd[k] * d[k][i]
             k = k + 1 
