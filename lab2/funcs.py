@@ -12,7 +12,7 @@ def new_x(x, k, y):
     new_x[k] += y
     return new_x
 
-def mint_new(a0, b0, eps, y, d):   # поиск минимального шага методом половинного деления
+def mint_new(func, a0, b0, eps, y, d):   # поиск минимального шага методом половинного деления
     lk = 0
     mk = 0
     delta = 0.5*eps
@@ -26,7 +26,7 @@ def mint_new(a0, b0, eps, y, d):   # поиск минимального шаг�
 
     k += 1
     
-    if function2(new_x(y, d, lk)) > function2(new_x(y, d, mk)):
+    if func(new_x(y, d, lk)) > func(new_x(y, d, mk)):
         ak = lk
     else:
         bk = mk
@@ -39,7 +39,7 @@ def mint_new(a0, b0, eps, y, d):   # поиск минимального шаг�
 
         k += 1
 
-        if function2(new_x(y, d, lk)) > function2(new_x(y, d, mk)):
+        if func(new_x(y, d, lk)) > func(new_x(y, d, mk)):
             ak = lk
         else:
             bk = mk
