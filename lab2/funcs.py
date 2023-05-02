@@ -31,8 +31,8 @@ def mint_new(a0, b0, eps, y, d):   # поиск минимального шаг�
     else:
         bk = mk
 
-    while (bk - ak) >= 0.1:
-        if k > 30:
+    while (bk - ak) >= 0.01:
+        if k > 100:
             break
         lk = (ak + bk) / 2 - delta
         mk = (ak + bk) / 2 + delta

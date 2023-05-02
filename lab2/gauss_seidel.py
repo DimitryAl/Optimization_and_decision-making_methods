@@ -10,6 +10,13 @@ def comp(x1:list[float], x2:list[float], eps:float) -> bool:
     return False
 
 
+def norm(x, y, eps):
+    temp = ((y[0]-x[0])**2+(y[1]-x[1])**2)**(1/2)
+    if temp < eps:
+        return True
+    else:
+        return False
+
 def gauss_seidel_opt(func, y:list[float], eps:float):
     ''' Метод Гаусса-Зейделя с одномерной оптимизацией '''
     print("Метод Гаусса-Зейделя с одномерной оптимизацией")
@@ -20,10 +27,10 @@ def gauss_seidel_opt(func, y:list[float], eps:float):
     j = 0
     table2 = PrettyTable()
     table2.field_names = ["k", "x", "f(x)", "j", "yi", "di", "lmbd"]
-    table2.add_row([j, y.copy(), func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+    table2.add_row([j, y.copy(), func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
     cnt = 0
     while True:
-        if cnt > 20:
+        if cnt > 50:
             print(table2)
             break
         cnt+=1
@@ -34,15 +41,15 @@ def gauss_seidel_opt(func, y:list[float], eps:float):
                 y[i] = y[i] + lmbd[k] * d[k][i]
             k = k + 1 
         if comp(y, y_old, eps):
-            table2.add_row([j+1, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+            table2.add_row([j+1, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
             print(table2)
             break
         j = j + 1
-        table2.add_row([j, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+        table2.add_row([j, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
         y_old = y.copy()
     print(f"Найденный минимум: ({y[0]}, {y[1]})")
     print(f"Значение функции в минимуме: {func(y)}")
-
+    return y, table2.get_string()
 
 
 def lmbd_check(lmbd, y, d, k, func):
@@ -59,7 +66,7 @@ def lmbd_check(lmbd, y, d, k, func):
         cnt += 1
         if cnt > 20:
             break
-    return 0.1
+    return 0
     
 
 def gauss_seidel_disk(func, y:list[float], eps:float):
@@ -68,32 +75,30 @@ def gauss_seidel_disk(func, y:list[float], eps:float):
     n = 2
     d = [[1, 0], [0, 1]]
     y_old = y.copy()
-    lmbd = [0.1, 0.1]
+    lmbd = [1, 1]
     j = 0
     table = PrettyTable()
     table.field_names = ["k", "x", "f(x)", "j", "yi", "di", "lmbd"]
-    table.add_row([j, y.copy(), func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+    table.add_row([j, y.copy(), func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
     cnt = 0
     while True:
+        lmbd = [0.1, 0.1]
         if cnt >= 50:
             print(table)
             break
         cnt+=1
-        k = 0 # по какой координате шагаем
-        #while k <= n - 1:
-            #lmbd[k] = lmbd_check(lmbd[k], y, d, 1, func)
-            #for i in range(n):
-            #    y[i] = y[i] + lmbd[k] * d[k][i]
-            #k = k + 1 
         lmbd[0] = lmbd_check(lmbd[0], y, d, 0, func)
+        y[0] = y[0] + lmbd[0] * d[0][0]
         lmbd[1] = lmbd_check(lmbd[1], y, d, 1, func)
-        for i in range(n):
-            y[i] = y[i] + lmbd[i] * d[i][i]
+        y[1] = y[1] + lmbd[1] * d[1][1]
+        #if norm(y, y_old, eps):
         if comp(y, y_old, eps):
-            table.add_row([j+1, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+            table.add_row([j+1, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
             print(table)
             break
         j = j + 1
-        table.add_row([j, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"])
+        table.add_row([j, y_old, func(y_old), "1\n2", f"{y[0]}\n{y[1]}", f"{d[0]}\n{d[1]}", f"{lmbd[0]}\n{lmbd[1]}"], divider=True)
         y_old = y.copy()
-    print(y)
+    print(f"Найденный минимум: ({y[0]}, {y[1]})")
+    print(f"Значение функции в минимуме: {func(y)}")
+    return y, table.get_string()
